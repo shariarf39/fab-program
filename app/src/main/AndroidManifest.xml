@@ -16,6 +16,24 @@
         android:theme="@style/Theme.FabProgram"
         tools:targetApi="31">
         <activity
+            android:name=".Loops"
+            android:exported="false" />
+        <activity
+            android:name=".Conditions"
+            android:exported="false" />
+        <activity
+            android:name=".DataType"
+            android:exported="false" />
+        <activity
+            android:name=".Basic"
+            android:exported="false" />
+        <activity
+            android:name=".Basic_To_Advance"
+            android:exported="false" />
+        <activity
+            android:name=".Program_Home"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity

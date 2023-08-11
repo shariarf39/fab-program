@@ -2,6 +2,9 @@ package com.fabred.fabprogram;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -12,15 +15,18 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +41,8 @@ import com.google.android.gms.ads.initialization.InitializationStatus;
 import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,6 +55,13 @@ public class MainActivity extends AppCompatActivity {
     GridView mainGrid;
     SharedPreferences sharedPreferences;
     TextView tvScore;
+    BottomNavigationView nav_bar;
+    FrameLayout fragment;
+    ScrollView linearlayout, linear_prgram;
+
+    SharedPreferences.Editor editor;
+
+    androidx.cardview.widget.CardView cpp, java, py, js;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +72,16 @@ public class MainActivity extends AppCompatActivity {
         mAdView = findViewById(R.id.adView);
         mainGrid = findViewById(R.id.mainGrid);
         tvScore = findViewById(R.id.tvScore);
+        nav_bar = findViewById(R.id.nav_bar);
+
+        linear_prgram = findViewById(R.id.linear_prgram);
+        linearlayout = findViewById(R.id.linearlayout);
+
+        cpp = findViewById(R.id.cpp);
+        java = findViewById(R.id.java);
+        py = findViewById(R.id.py);
+        js = findViewById(R.id.js);
+
         mAdView.setVisibility(View.GONE);
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
@@ -83,13 +108,90 @@ public class MainActivity extends AppCompatActivity {
         String lastScore = sharedPreferences.getString("savedScore", "No Data");
         tvScore.setText(lastScore);
 
+        //========================================================
+
+        sharedPreferences = getSharedPreferences("fab_program", Context.MODE_PRIVATE);
+        editor= sharedPreferences.edit();
+        //=======================================================
+
+
+        nav_bar.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if(item.getItemId()==R.id.nav_home){
+                    linearlayout.setVisibility(View.VISIBLE);
+
+                    linear_prgram.setVisibility(View.GONE);
+
+                }
+                if(item.getItemId()==R.id.nav_about){
+                    linearlayout.setVisibility(View.GONE);
+                    //li_frag.setVisibility(View.VISIBLE);
+                   linear_prgram.setVisibility(View.VISIBLE);
+
+
+                }
+
+
+
+                return true;
+            }
+        });
+        //=================
+        final String langulage[] = {""};
+        cpp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                langulage[0] = "cpp";
+                editor.putString("language",langulage[0]);
+                editor.commit();
+
+                startActivity(new Intent(MainActivity.this, Program_Home.class));
+            }
+        });
+          java.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                langulage[0] = "java";
+                editor.putString("language","java");
+                editor.commit();
+                startActivity(new Intent(MainActivity.this, Program_Home.class));
+            }
+        });
+            py.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putString("language","py");
+                editor.commit();
+                langulage[0] = "py";
+                startActivity(new Intent(MainActivity.this, Program_Home.class));
+            }
+        });
+           js.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editor.putString("language","js");
+                editor.commit();
+                langulage[0] = "js";
+                startActivity(new Intent(MainActivity.this, Program_Home.class));
+            }
+        });
+
+
+
+
+        //============
+
     }
     //==================================================================== onCreate Ends here
     //====================================================================
 
 
 
+//============================================
 
+
+    //===================================================
 
 
 
