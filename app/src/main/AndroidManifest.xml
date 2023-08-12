@@ -16,6 +16,21 @@
         android:theme="@style/Theme.FabProgram"
         tools:targetApi="31">
         <activity
+            android:name=".St_Final"
+            android:exported="false" />
+        <activity
+            android:name=".OOP"
+            android:exported="false" />
+        <activity
+            android:name=".Extras"
+            android:exported="false" />
+        <activity
+            android:name=".Array"
+            android:exported="false" />
+        <activity
+            android:name=".Functions"
+            android:exported="false" />
+        <activity
             android:name=".Loops"
             android:exported="false" />
         <activity

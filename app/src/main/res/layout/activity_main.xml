@@ -15,14 +15,16 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/layBottomBanner"
         android:layout_alignParentTop="true"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:visibility="gone"
+        >
 
         <LinearLayout
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:visibility="visible"
+
             >
 
 
@@ -133,7 +135,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:paddingBottom="5dp"
-         android:visibility="gone"
+         android:visibility="visible"
          >
 
         <LinearLayout
@@ -405,28 +407,7 @@
 
 
  <!--   <!- Banner ad  &ndash;&gt;-->
-    <LinearLayout
-        android:id="@+id/layBottomBanner"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true"
-        >
-        <com.google.android.gms.ads.AdView
-            xmlns:ads="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/adView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            ads:adSize="BANNER"
-            ads:adUnitId="@string/admob_BANNER_UNIT_ID"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"
-            >
-        </com.google.android.gms.ads.AdView>
 
-    </LinearLayout>
     <!-- **************************************************** -->
 
 

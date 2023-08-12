@@ -51,7 +51,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
 
-    AdView mAdView;
+    //AdView mAdView;
     GridView mainGrid;
     SharedPreferences sharedPreferences;
     TextView tvScore;
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        mAdView = findViewById(R.id.adView);
+      //  mAdView = findViewById(R.id.adView);
         mainGrid = findViewById(R.id.mainGrid);
         tvScore = findViewById(R.id.tvScore);
         nav_bar = findViewById(R.id.nav_bar);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         py = findViewById(R.id.py);
         js = findViewById(R.id.js);
 
-        mAdView.setVisibility(View.GONE);
+
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         //আদর (Student ID: 47621) এর রুহ এর মাগফেরাত কামনা করি এবং আল্লাহ যেনো তাঁর পরিবারের জন্য সহায় হোন।
@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (getString(R.string.show_admob_ad).contains("ON")){
             initAdmobAd();
-            loadBannerAd();
+           // loadBannerAd();
             loadFullscreenAd();
         }
 
@@ -119,15 +119,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if(item.getItemId()==R.id.nav_home){
-                    linearlayout.setVisibility(View.VISIBLE);
 
-                    linear_prgram.setVisibility(View.GONE);
+                    linearlayout.setVisibility(View.GONE);
+                    //li_frag.setVisibility(View.VISIBLE);
+                    linear_prgram.setVisibility(View.VISIBLE);
 
                 }
                 if(item.getItemId()==R.id.nav_about){
-                    linearlayout.setVisibility(View.GONE);
-                    //li_frag.setVisibility(View.VISIBLE);
-                   linear_prgram.setVisibility(View.VISIBLE);
+                    linearlayout.setVisibility(View.VISIBLE);
+
+                    linear_prgram.setVisibility(View.GONE);
 
 
                 }
@@ -147,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
 
                 startActivity(new Intent(MainActivity.this, Program_Home.class));
+                showInterstitial();
             }
         });
           java.setOnClickListener(new View.OnClickListener() {
@@ -156,6 +158,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("language","java");
                 editor.commit();
                 startActivity(new Intent(MainActivity.this, Program_Home.class));
+                showInterstitial();
             }
         });
             py.setOnClickListener(new View.OnClickListener() {
@@ -165,6 +168,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
                 langulage[0] = "py";
                 startActivity(new Intent(MainActivity.this, Program_Home.class));
+                showInterstitial();
             }
         });
            js.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +178,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
                 langulage[0] = "js";
                 startActivity(new Intent(MainActivity.this, Program_Home.class));
+                showInterstitial();
             }
         });
 
@@ -313,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+/*
 
 
     int BANNER_AD_CLICK_COUNT =0;
@@ -362,6 +368,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+*/
 
 
 
