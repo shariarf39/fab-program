@@ -18,6 +18,11 @@
         app:srcCompat="@drawable/back"
         />
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        >
 
 
 
@@ -73,6 +78,17 @@
             android:textStyle="bold"
             android:textAlignment="center"
             />
+        <TextView
+            android:id="@+id/wrong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="100"
+            android:textColor="@color/colorAccent"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            />
 
 
         <TextView
@@ -87,6 +103,6 @@
 
     </LinearLayout>
 
-
+    </ScrollView>
 
 </RelativeLayout>

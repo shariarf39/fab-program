@@ -2,7 +2,9 @@ package com.fabred.fabprogram;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AnimationUtils;
@@ -11,6 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,10 +32,14 @@ public class QuestionCollection extends AppCompatActivity {
     String Answer;
     public static List<QuestionModule> question_list;
     int score;
+    int wrong;
     public static String SUBJECT_NAME = "";
     public static ArrayList<ArrayList<QuestionModule>> questionBank = new ArrayList<>();
     public static ArrayList<HashMap<String, String>> subjectList = new ArrayList<>();
     LinearLayout rootLay;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
 
 
     @Override
@@ -51,6 +58,10 @@ public class QuestionCollection extends AppCompatActivity {
         score = 0;
         radioGroup = findViewById(R.id.radioGroup);
         loadQuestion();
+
+
+        sharedPreferences = getSharedPreferences("c_ans", Context.MODE_PRIVATE);
+        editor= sharedPreferences.edit();
 
     }
 
@@ -109,6 +120,8 @@ public class QuestionCollection extends AppCompatActivity {
         } else {
             Intent intent = new Intent(this, ScoreActivity.class);
             intent.putExtra("score", score);
+            intent.putExtra("wrong", wrong);
+            intent.putExtra("total", score+wrong);
             startActivity(intent);
             finish();
         }
@@ -141,11 +154,46 @@ public class QuestionCollection extends AppCompatActivity {
 
     private Intent isRightOrWrong(String Answer) {
         Intent screen;
+        int j =0;
+
+
         if (Answer.equals(rightAnswer)) {
             this.score += 1;
             screen = new Intent(this, RightActivity.class);
 
         } else {
+
+
+            editor.putString("ans",rightAnswer);
+            editor.commit();
+
+
+
+            this.wrong+=1;
+
+
+            String correctOptionText = "";
+
+            if (rightAnswer.equals("A")) {
+                correctOptionText = optionA.getText().toString();
+            } else if (rightAnswer.equals("B")) {
+                correctOptionText = optionB.getText().toString();
+            } else if (rightAnswer.equals("C")) {
+                correctOptionText = optionC.getText().toString();
+            } else if (rightAnswer.equals("D")) {
+                correctOptionText = optionD.getText().toString();
+            }
+            j++;
+
+            editor.putString("ans",correctOptionText);
+            editor.putString("option",rightAnswer);
+            editor.putString("wrong", String.valueOf(j));
+            editor.commit();
+
+            Toast.makeText(this, "Answer:  "+rightAnswer+". " + correctOptionText, Toast.LENGTH_SHORT).show();
+
+
+
             screen = new Intent(this, WrongActivity.class);
         }
 

@@ -10,8 +10,8 @@ android {
         applicationId "com.fabred.fabprogram"
         minSdk 24
         targetSdk 33
-        versionCode 3
-        versionName "1.02"
+        versionCode 4
+        versionName "1.03.01"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

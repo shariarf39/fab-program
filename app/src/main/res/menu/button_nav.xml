@@ -9,7 +9,7 @@
         android:id="@+id/nav_home"
         />
 
-    <item android:title="Quix"
+    <item android:title="Quiz"
         android:icon="@drawable/baseline_quiz_24"
 
         android:id="@+id/nav_about"

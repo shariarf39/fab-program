@@ -13,7 +13,7 @@ import android.widget.TextView;
 public class ScoreActivity extends AppCompatActivity {
 
     TextView txtscore;
-    TextView txtStatus, tvSubjectName;
+    TextView txtStatus, tvSubjectName, wrong_score,textView2;
     MediaPlayer audio;
     ImageView imgBack;
     SharedPreferences sharedPreferences;
@@ -26,13 +26,19 @@ public class ScoreActivity extends AppCompatActivity {
         imgBack = findViewById(R.id.imgBack);
         tvSubjectName = findViewById(R.id.tvSubjectName);
         txtscore = findViewById(R.id.txtscore);
+        textView2 = findViewById(R.id.textView2);
+        wrong_score = findViewById(R.id.wrong);
         txtStatus = findViewById(R.id.txtStatus);
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
         Intent intent = getIntent();
         String scores = String.valueOf(intent.getIntExtra("score", 0));
+        String wrong = String.valueOf(intent.getIntExtra("wrong", 0));
+        String total = String.valueOf(intent.getIntExtra("total", 0));
         txtscore.setText(scores);
         txtStatus.setText(setStatus(scores));
+        wrong_score.setText("Wrong: "+wrong);
+        textView2.setText("Total: "+total+"\n"+"Correct:");
         audio.start();
 
 
