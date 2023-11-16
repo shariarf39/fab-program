@@ -180,6 +180,15 @@
                     android:foreground="?attr/selectableItemBackground"
                     />
 
+                <TextView
+                    android:id="@+id/p_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="1/25"
+
+                    />
+
 
             </LinearLayout>
 

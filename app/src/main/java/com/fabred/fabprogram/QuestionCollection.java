@@ -22,7 +22,7 @@ import java.util.List;
 public class QuestionCollection extends AppCompatActivity {
 
     RadioGroup radioGroup;
-    TextView lblQuestion;
+    TextView lblQuestion, p_position;
     RadioButton optionA;
     RadioButton optionB;
     RadioButton optionC;
@@ -33,6 +33,7 @@ public class QuestionCollection extends AppCompatActivity {
     public static List<QuestionModule> question_list;
     int score;
     int wrong;
+    int position=1;
     public static String SUBJECT_NAME = "";
     public static ArrayList<ArrayList<QuestionModule>> questionBank = new ArrayList<>();
     public static ArrayList<HashMap<String, String>> subjectList = new ArrayList<>();
@@ -55,9 +56,14 @@ public class QuestionCollection extends AppCompatActivity {
         optionB = findViewById(R.id.opcaoB);
         optionC = findViewById(R.id.opcaoC);
         optionD = findViewById(R.id.opcaoD);
+        p_position = findViewById(R.id.p_position);
         score = 0;
         radioGroup = findViewById(R.id.radioGroup);
+
+
         loadQuestion();
+
+
 
 
         sharedPreferences = getSharedPreferences("c_ans", Context.MODE_PRIVATE);
@@ -159,7 +165,12 @@ public class QuestionCollection extends AppCompatActivity {
 
         if (Answer.equals(rightAnswer)) {
             this.score += 1;
+            this.position += 1;
+            p_position.setText(String.valueOf(position)+"/25");
+
             screen = new Intent(this, RightActivity.class);
+
+
 
         } else {
 
@@ -167,9 +178,11 @@ public class QuestionCollection extends AppCompatActivity {
             editor.putString("ans",rightAnswer);
             editor.commit();
 
-
+            this.position += 1;
+            p_position.setText(String.valueOf(position)+"/25");
 
             this.wrong+=1;
+
 
 
             String correctOptionText = "";
