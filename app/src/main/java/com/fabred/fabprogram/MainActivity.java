@@ -1,15 +1,24 @@
 package com.fabred.fabprogram;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -60,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
     ScrollView linearlayout, linear_prgram;
 
     SharedPreferences.Editor editor;
+    private Handler handler = new Handler();
+    private static final int REFRESH_INTERVAL = 3000;
+
+    int i =0;
 
     androidx.cardview.widget.CardView cpp, java, py, js;
 
@@ -67,6 +80,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        askNotificationPermission();
+        checkAndRefresh();
 
 
       //  mAdView = findViewById(R.id.adView);
@@ -82,6 +97,40 @@ public class MainActivity extends AppCompatActivity {
         py = findViewById(R.id.py);
         js = findViewById(R.id.js);
 
+      /*  ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if(networkInfo != null && networkInfo.isConnected()){
+
+
+        }else{
+            Toast.makeText(MainActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+            //  progressBar.setVisibility(View.GONE);
+
+            new AlertDialog.Builder( MainActivity.this)
+                    .setTitle("No Internet")
+                    .setMessage("Please Connect with Internet")
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+                        }
+                    })
+                    .setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .create()
+                    .show();
+
+
+
+
+        }*/
+
+
+
 
         sharedPreferences = getSharedPreferences(getString(R.string.app_name), MODE_PRIVATE);
 
@@ -90,7 +139,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         //calling a method to create our question bank with ans
-        QuestionCollection.createQuestionBank();
+        QuestionCollection.createQuestionBank(this);
+
+
 
         if (getString(R.string.show_admob_ad).contains("ON")){
             initAdmobAd();
@@ -129,6 +180,39 @@ public class MainActivity extends AppCompatActivity {
                     linearlayout.setVisibility(View.VISIBLE);
 
                     linear_prgram.setVisibility(View.GONE);
+
+
+                   /* if(networkInfo != null && networkInfo.isConnected()){
+
+
+
+                    }else{
+                        Toast.makeText(MainActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+                        //  progressBar.setVisibility(View.GONE);
+
+                        new AlertDialog.Builder( MainActivity.this)
+                                .setTitle("No Internet")
+                                .setMessage("Please Connect with Internet")
+                                .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+                                    }
+                                })
+                                .setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                })
+                                .create()
+                                .show();
+
+
+
+
+                    }*/
+
 
 
                 }
@@ -443,6 +527,7 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         // When user press back button
 
+        super.onBackPressed();
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.addCategory(Intent.CATEGORY_HOME);
@@ -456,7 +541,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mBackPressed = System.currentTimeMillis();
-
 
 
     } // end of onBackpressed method
@@ -492,4 +576,115 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+    // Declare the launcher at the top of your Activity/Fragment:
+    // Declare the launcher at the top of your Activity/Fragment:
+    private final ActivityResultLauncher<String> requestPermissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
+                if (isGranted) {
+                    // FCM SDK (and your app) can post notifications.
+                } else {
+                    // TODO: Inform user that that your app will not show notifications.
+                }
+            });
+
+    private void askNotificationPermission() {
+        // This is only necessary for API level >= 33 (TIRAMISU)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) ==
+                    PackageManager.PERMISSION_GRANTED) {
+                // FCM SDK (and your app) can post notifications.
+            } else if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
+
+
+                new AlertDialog.Builder( MainActivity.this)
+                        .setTitle("Notification Permission")
+                        .setMessage("For App Better Performance")
+                        .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+                            }
+                        })
+                        .setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        })
+                        .create()
+                        .show();
+            } else {
+                // Directly ask for the permission
+                requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+            }
+        }
+    }
+
+
+    private void checkAndRefresh() {
+
+
+        // Check network status
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Internet is available, implement your data refresh logic here
+
+            // For demonstration purposes, let's show a toast
+            Toast.makeText(MainActivity.this, "Internet Connected", Toast.LENGTH_SHORT).show();
+            if (i==1) {
+                startActivity(new Intent(MainActivity.this, MainActivity.class));
+
+                i=0;
+            }
+
+            // TODO: Implement your data refresh logic here
+
+        } else if(i==0) {
+
+            i =1;
+            // No Internet, show a toast and schedule the next check
+            Toast.makeText(MainActivity.this, "No Internet", Toast.LENGTH_SHORT).show();
+
+
+            new AlertDialog.Builder( MainActivity.this)
+                    .setTitle("No Internet")
+                    .setMessage("Please Connect with Internet")
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            requestPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS);
+                        }
+                    })
+                    .setNegativeButton("No Thanks", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    })
+                    .create()
+                    .show();
+
+
+            // Schedule the next check after a delay (REFRESH_INTERVAL)
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    checkAndRefresh();
+                }
+            }, REFRESH_INTERVAL);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        // Remove callbacks when the activity is destroyed to prevent memory leaks
+        handler.removeCallbacksAndMessages(null);
+        super.onDestroy();
+    }
+
+
 }

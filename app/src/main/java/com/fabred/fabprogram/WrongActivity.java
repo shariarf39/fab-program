@@ -25,7 +25,7 @@ public class WrongActivity extends AppCompatActivity {
         String ans = sharedPreferences.getString("ans", "Nothing");
         String option = sharedPreferences.getString("option", "Nothing");
 
-        correct_ans.setText("Correct Ans:\n " +option+". "+ans);
+        correct_ans.setText("Correct Ans:\n  "+ans);
 
 
         Thread thread = new Thread(new Runnable() {
