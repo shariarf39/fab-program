@@ -42,7 +42,7 @@ public class Array extends AppCompatActivity {
 
         if(element.equals("cpp")){
             hashMap = new HashMap<>();
-            hashMap.put("name", "C++ Arrays\nIn C++ std::array is a container that encapsulates fixed size arrays. In C++, array index starts from 0. We can store only fixed set of elements in C++ array.\n" +
+            hashMap.put("name", "C++ Arrays array is most important part of any programming language \nIn C++ std::array is a container that encapsulates fixed size arrays. In C++, array index starts from 0. We can store only fixed set of elements in C++ array.\n" +
                     "\n" +
                     "\uD83D\uDCA0 Advantages of C++ Array\n" +
                     "Code Optimization (less code)\n" +
