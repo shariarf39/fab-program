@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "585021515607",
+    "project_id": "fab-program",
+    "storage_bucket": "fab-program.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585021515607:android:e66ea66b0bf9f7334e8012",
+        "android_client_info": {
+          "package_name": "com.fabred.fabprogram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD53kLkUOluZLbbSovYY2uThVinmEZe8N4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
