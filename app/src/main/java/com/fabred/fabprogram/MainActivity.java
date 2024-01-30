@@ -22,6 +22,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -39,6 +40,9 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fabred.fabprogram.contest.Login;
+import com.fabred.fabprogram.contest.Profile;
+import com.fabred.fabprogram.contest.Score;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -57,7 +61,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
+import soup.neumorphism.NeumorphCardView;
+
 public class MainActivity extends AppCompatActivity {
+
 
 
     //AdView mAdView;
@@ -67,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView nav_bar;
     FrameLayout fragment;
     ScrollView linearlayout, linear_prgram;
+    NeumorphCardView score, profile;
 
     SharedPreferences.Editor editor;
     private Handler handler = new Handler();
@@ -96,6 +104,22 @@ public class MainActivity extends AppCompatActivity {
         java = findViewById(R.id.java);
         py = findViewById(R.id.py);
         js = findViewById(R.id.js);
+        score = findViewById(R.id.score);
+        profile = findViewById(R.id.Profile);
+
+        score.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Score.class));
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, Profile.class));
+            }
+        });
 
       /*  ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -347,10 +371,39 @@ public class MainActivity extends AppCompatActivity {
                     QuestionCollection.SUBJECT_NAME = subjectName;
                     QuestionCollection.question_list = QuestionCollection.questionBank.get(position);
 
-                    Intent intent = new Intent(MainActivity.this, QuestionCollection.class);
-                    startActivity(intent);
+                    if(subjectName.equals("Contest")){
 
-                    showInterstitial();
+                        sharedPreferences = getSharedPreferences("contest_Panel", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        String email = sharedPreferences.getString("email", "NoData");
+                        editor.putString("subjectName", subjectName);
+                        editor.apply();
+
+                        Intent intents = new Intent(MainActivity.this, ScoreActivity.class);
+                        intents.putExtra("subjectName", subjectName);
+                        startActivity(intents);
+                        finish();
+                        if(email.equals("NoData")){
+                            Intent intent = new Intent(MainActivity.this, Login.class);
+                            startActivity(intent);
+                            showInterstitial();
+                        }else{
+
+                            Intent intent = new Intent(MainActivity.this, QuestionCollection.class);
+                            startActivity(intent);
+                            showInterstitial();
+                        }
+
+
+                    }else {
+                        sharedPreferences = getSharedPreferences("contest_Panel", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("subjectName", "dfd");
+
+                        Intent intent = new Intent(MainActivity.this, QuestionCollection.class);
+                        startActivity(intent);
+                        showInterstitial();
+                    }
 
                 }
             });

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:padding="10dp"
+    android:background="#1976D2"
+
+
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            >
+            <ImageView
+                android:id="@+id/profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/logo"
+
+                />
+
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registration"
+                android:textColor="@color/white"
+                android:layout_below="@+id/profile_image"
+                android:textSize="40dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/e1"
+                android:layout_below="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Name"
+                app:boxStrokeColor="#4A000000"
+                app:hintTextColor="@color/black"
+                android:layout_marginTop="40dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="6dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                android:padding="5dp"
+
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:inputType="textEmailAddress"
+                    android:gravity="top"
+                    android:overScrollMode="always"
+
+                    android:scrollbarStyle="insideInset"
+                    android:scrollHorizontally="false"
+
+                    android:textColorHint="#F5000000"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/e3"
+                android:layout_below="@+id/e1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="E-mail"
+                app:boxStrokeColor="#4A000000"
+                app:hintTextColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="2dp"
+                android:layout_marginStart="6dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                android:padding="5dp"
+
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:inputType="textEmailAddress"
+                    android:gravity="top"
+                    android:overScrollMode="always"
+
+                    android:scrollbarStyle="insideInset"
+                    android:scrollHorizontally="false"
+
+                    android:textColorHint="#F5000000"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+                    android:textSize="25dp"
+
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/e2"
+                android:layout_below="@+id/e3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="University Name"
+
+                app:boxStrokeColor="#4A000000"
+                app:hintTextColor="@color/black"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="6dp"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+                android:padding="5dp"
+
+                >
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/uni_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:inputType="text"
+                    android:gravity="top"
+                    android:overScrollMode="always"
+                    android:scrollbarStyle="insideInset"
+                    android:scrollHorizontally="false"
+                    android:textSize="25dp"
+                    android:textColorHint="#F5000000"
+                    android:padding="5dp"
+                    android:textColor="@color/black"
+
+
+                    >
+
+                </com.google.android.material.textfield.TextInputEditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+
+            <soup.neumorphism.NeumorphButton
+                android:layout_below="@+id/progress"
+                android:id="@+id/submit_button"
+                android:layout_width="250dp"
+                android:layout_height="80dp"
+                android:text="Submit"
+                android:backgroundTint="#1EE91E63"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+
+                android:layout_weight="1"
+
+
+                />
+
+
+
+
+
+
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+
+
+                android:layout_below="@+id/e2"
+
+
+                />
+
+
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</ScrollView>

@@ -101,6 +101,74 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/global_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+               android:weightSum="3"
+                >
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/score"
+                    style="@style/Widget.Neumorph.ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    app:neumorph_shadowColorDark="@color/shadow_color_bottom"
+                    app:neumorph_shadowColorLight="@color/shadow_color_top"
+                    tools:layout_editor_absoluteX="0dp"
+
+                    >
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Contest challenges\nGlobal Scores"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        />
+
+
+
+
+                </soup.neumorphism.NeumorphCardView>
+
+                <soup.neumorphism.NeumorphCardView
+                    android:id="@+id/Profile"
+                    style="@style/Widget.Neumorph.ImageView"
+                    android:layout_width="match_parent"
+                    android:layout_weight="2"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
+                    android:layout_marginBottom="0dp"
+                    app:neumorph_shadowColorDark="@color/shadow_color_bottom"
+                    app:neumorph_shadowColorLight="@color/shadow_color_top"
+                    tools:layout_editor_absoluteX="0dp">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:text="Profile"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:textColor="@color/black"
+                        />
+
+
+
+                </soup.neumorphism.NeumorphCardView>
+
+            </LinearLayout>
+
 
             <LinearLayout
                 android:id="@+id/layMenuButtons"

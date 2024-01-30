@@ -76,6 +76,7 @@ public class QuestionCollection extends AppCompatActivity {
 
 
         loadQuestion();
+        p_position.setText(String.valueOf(position)+"/"+question_list.size());
 
 
 
@@ -109,6 +110,7 @@ public class QuestionCollection extends AppCompatActivity {
 
         // When landing in home screen
 
+        super.onBackPressed();
         if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
 
             Intent intent = new Intent(Intent.ACTION_MAIN);
@@ -180,7 +182,7 @@ public class QuestionCollection extends AppCompatActivity {
         if (Answer.equals(rightAnswer)) {
             this.score += 1;
             this.position += 1;
-            p_position.setText(String.valueOf(position)+"/25");
+            p_position.setText(String.valueOf(position)+"/"+question_list.size());
 
             screen = new Intent(this, RightActivity.class);
 
@@ -193,7 +195,7 @@ public class QuestionCollection extends AppCompatActivity {
             editor.commit();
 
             this.position += 1;
-            p_position.setText(String.valueOf(position)+"/25");
+            p_position.setText(String.valueOf(position)+"/"+question_list.size());
 
             this.wrong+=1;
 
@@ -218,7 +220,6 @@ public class QuestionCollection extends AppCompatActivity {
             editor.commit();
 
             Toast.makeText(this,  correctOptionText, Toast.LENGTH_SHORT).show();
-
 
 
             screen = new Intent(this, WrongActivity.class);
@@ -248,8 +249,90 @@ public class QuestionCollection extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(context);
 
-        //C Quiz
 
+
+
+
+
+
+
+
+
+        String url_contest = "https://fabred.xyz/Fab_Programming_Quiz/contest.json";
+
+        StringRequest stringRequest_contest = new StringRequest(Request.Method.GET, url_contest,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("response", response);
+
+                        try {
+                            if (response.startsWith("[")) {
+
+                                JSONArray jsonArray = new JSONArray(response);
+
+                                questions = new ArrayList() {
+                                    {
+
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                                            // Extract question details
+                                            String questionText = jsonObject.getString("question");
+                                            String correctOption = jsonObject.getString("rightans");
+                                            String optionA = jsonObject.getString("option1");
+                                            String optionB = jsonObject.getString("option2");
+                                            String optionC = jsonObject.getString("option3");
+                                            String optionD = jsonObject.getString("option4");
+
+
+                                            add(new QuestionModule(questionText, correctOption, optionA, optionB, optionC, optionD));
+
+                                        }
+
+                                    }
+                                };
+
+
+                                ((MainActivity) context).runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        QuestionModule.createQuestionsForSubject("Contest", R.drawable.contest, questions);
+
+                                    }
+                                });
+                            } else {
+                                Log.e("error", "Invalid JSON format in the response");
+                                // Handle the case when the response is not a valid JSON array
+                            }
+                        } catch (JSONException e) {
+                            Log.e("error", "JSONException: " + e.getMessage());
+                            e.printStackTrace();
+                            // Handle JSON parsing error
+                        }
+
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("error", "VolleyError: " + error.getMessage());
+
+            }
+        });
+
+
+        queue.add(stringRequest_contest);
+
+
+
+
+
+
+
+
+
+
+    //C Quiz
 
 
         String url = "https://fabred.xyz/Fab_Programming_Quiz/c.json";
@@ -267,21 +350,21 @@ public class QuestionCollection extends AppCompatActivity {
 
                                 questions = new ArrayList() {
                                     {
-                                for (int i = 0; i < jsonArray.length(); i++) {
-                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                        for (int i = 0; i < jsonArray.length(); i++) {
+                                            JSONObject jsonObject = jsonArray.getJSONObject(i);
 
-                                    // Extract question details
-                                    String questionText = jsonObject.getString("question");
-                                    String correctOption = jsonObject.getString("rightans");
-                                    String optionA = jsonObject.getString("option1");
-                                    String optionB = jsonObject.getString("option2");
-                                    String optionC = jsonObject.getString("option3");
-                                    String optionD = jsonObject.getString("option4");
+                                            // Extract question details
+                                            String questionText = jsonObject.getString("question");
+                                            String correctOption = jsonObject.getString("rightans");
+                                            String optionA = jsonObject.getString("option1");
+                                            String optionB = jsonObject.getString("option2");
+                                            String optionC = jsonObject.getString("option3");
+                                            String optionD = jsonObject.getString("option4");
 
 
-                                             add(new QuestionModule(questionText, correctOption, optionA, optionB, optionC, optionD));
+                                            add(new QuestionModule(questionText, correctOption, optionA, optionB, optionC, optionD));
 
-                                }
+                                        }
                                     }
                                 };
 
@@ -382,10 +465,7 @@ public class QuestionCollection extends AppCompatActivity {
         queue.add(stringRequest_cpp);
 
 
-
-
         //------------- Python
-
 
 
         String url_py = "https://fabred.xyz/Fab_Programming_Quiz/py.json";
@@ -583,8 +663,6 @@ public class QuestionCollection extends AppCompatActivity {
         queue.add(stringRequest_html);
 
 
-
-
         //------------- Subject 5 JAVA SCRIPT
 
         String url_js = "https://fabred.xyz/Fab_Programming_Quiz/js.json";
@@ -654,9 +732,9 @@ public class QuestionCollection extends AppCompatActivity {
 
         //------------- Subject 6
 
+        // Programming Contest
 
     }
-
 
 
 
