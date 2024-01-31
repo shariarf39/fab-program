@@ -23,6 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Calendar;
 
 public class ScoreActivity extends AppCompatActivity {
@@ -86,22 +88,26 @@ public class ScoreActivity extends AppCompatActivity {
         score_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 final Calendar c = Calendar.getInstance();
                 int year = c.get(Calendar.YEAR);
                 int month = c.get(Calendar.MONTH);
                 int day = c.get(Calendar.DAY_OF_MONTH);
 
-                // Create a DatePickerDialog
-
-                String date = String.valueOf(year-month-day);
-
-
+                // Calculate date with proper formatting
+                String date = year + "-" + (month + 1) + "-" + day; // Note: month is zero-based, so add 1
 
                 sharedPreferences = getSharedPreferences("contest_Panel", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 String email = sharedPreferences.getString("email", "No Data");
-                String url = "https://fabred.xyz/Fab_Programming_Quiz/data/update.php?email=" +email+ "&Score=" +scores + "&u_id="+date;
+
+                // Encode parameters in the URL
+                try {
+                    date = URLEncoder.encode(date, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
+                String url = "https://fabred.xyz/Fab_Programming_Quiz/data/update.php?email=" + email + "&Score=" + scores + "&u_id=" + date;
 
                 progressBar.setVisibility(View.VISIBLE);
                 StringRequest request = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
@@ -110,27 +116,23 @@ public class ScoreActivity extends AppCompatActivity {
                         progressBar.setVisibility(View.GONE);
                         Toast.makeText(ScoreActivity.this, "Success", Toast.LENGTH_SHORT).show();
 
-
                         new AlertDialog.Builder(ScoreActivity.this)
                                 .setTitle("Submitted")
                                 .setMessage("Thank You")
                                 .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        // Whatever...
                                         dialog.cancel();
                                     }
                                 }).show();
-
-
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        progressBar.setVisibility(View.GONE);
+                        Toast.makeText(ScoreActivity.this, "Error submitting data", Toast.LENGTH_SHORT).show();
                     }
                 });
-
 
                 RequestQueue requestQueue = Volley.newRequestQueue(ScoreActivity.this);
                 requestQueue.add(request);
